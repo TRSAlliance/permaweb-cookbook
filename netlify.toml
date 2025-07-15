@@ -1,6 +1,9 @@
 [build]
+  base = "sentinel-cli"              # ← 🔥 this tells Netlify where to `cd` first
   command = "npm run build"
-  publish = "src/.vuepress/dist"
+  publish = ".next"                  # or "build" for CRA / Vite
+  functions = "netlify/functions"
 
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
+  [build.environment]
+    NODE_ENV = "production"
+    FIREBASE_PROJECT = "trs-operator-live"
