@@ -1,3 +1,9 @@
-cd sentinel-cli
-npm install
-npm run build
+[build]
+  base = "sentinel-cli"
+  command = "npm run build"
+  publish = ".next" # or "out" if you're using next export
+  functions = "netlify/functions"
+
+  [build.environment]
+    NODE_ENV = "production"
+    FIREBASE_PROJECT = "trs-operator-live"
