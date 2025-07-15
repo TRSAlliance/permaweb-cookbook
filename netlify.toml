@@ -1,9 +1,3 @@
-[build]
-  base = "sentinel-cli"              # ← 🔥 this tells Netlify where to `cd` first
-  command = "npm run build"
-  publish = ".next"                  # or "build" for CRA / Vite
-  functions = "netlify/functions"
-
-  [build.environment]
-    NODE_ENV = "production"
-    FIREBASE_PROJECT = "trs-operator-live"
+npm install -g netlify-cli
+cd sentinel-cli  # or whatever your app dir is
+netlify build
