@@ -1,39 +1,41 @@
 {
-	"name": "cookbook",
-	"version": "0.0.1",
-	"description": "A collection of little developer guides to build on the permaweb",
-	"main": "index.js",
-	"authors": {
-		"name": "Permaweb Builders",
-		"email": "tom@hyper.io"
-	},
-	"repository": "twilson63/permaweb-cookbook/cookbook",
-	"scripts": {
-		"dev": "vuepress dev src",
-		"build": "vuepress build src",
-		"deploy": "npm run build && node deploy.mjs",
-		"fmt": "prettier --single-quote --trailing-comma none --write src/.vuepress",
-		"lint": "prettier --single-quote --trailing-comma none --check src/.vuepress"
-	},
-	"license": "MIT",
-	"devDependencies": {
-		"@bundlr-network/client": "^0.9.11",
-		"@snippetors/vuepress-plugin-code-copy": "^1.2.3",
-		"@vuepress/plugin-container": "2.0.0-beta.61",
-		"@vuepress/plugin-medium-zoom": "2.0.0-beta.61",
-		"@vuepress/plugin-search": "2.0.0-beta.61",
-		"arweave": "^1.11.8",
-		"prettier": "^2.8.4",
-		"vuepress": "2.0.0-beta.61",
-		"warp-contracts": "^1.2.37"
-	},
-	"dependencies": {
-		"@octokit/core": "^4.2.1",
-		"@vuepress/plugin-container": "2.0.0-beta.61",
-		"@vuepress/plugin-medium-zoom": "2.0.0-beta.61",
-		"add-to-calendar-button": "^2.2.5",
-		"bootstrap": "5.2.3",
-		"dotenv": "^16.1.4",
-		"openai": "^3.2.1"
-	}
+  "name": "permaweb-cookbook",
+  "version": "2.3.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export",
+    "audit-fix": "npm audit fix --force",
+    "dep-check": "npx depcheck --ignore-bin-package",
+    "update-deps": "npx npm-check-updates -u && npm install",
+    "trs": "node cli/index.js",
+    "docs": "vuepress dev src",
+    "docs:build": "vuepress build src",
+    "functions": "firebase deploy --only functions",
+    "sentinel": "node sentinel-cli/deploy.js"
+  },
+  "dependencies": {
+    "next": "^13.4.7",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.441.0",
+    "firebase": "^10.12.0",
+    "@react-three/fiber": "^8.16.8",
+    "three": "^0.165.0"
+  },
+  "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.0.0",
+    "@netlify/plugin-sitemap": "^0.8.1",
+    "@netlify/plugin-inline-critical-css": "^1.1.0",
+    "@netlify/plugin-minify-html": "^1.0.0",
+    "@netlify/plugin-lighthouse": "^6.0.0",
+    "depcheck": "^1.4.7",
+    "npm-check-updates": "^16.14.20",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5",
+    "vuepress": "^1.9.10",
+    "firebase-functions": "^5.0.1",
+    "firebase-admin": "^12.2.0"
+  }
 }
