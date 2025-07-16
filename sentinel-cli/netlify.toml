@@ -1,9 +1,31 @@
 [build]
-  base = "sentinel-cli"
-  command = "npm run build"
-  publish = ".next" # or "out" if you're using next export
-  functions = "netlify/functions"
+  command = "npm run export && npm run docs:build"
+  publish = "out"
 
-  [build.environment]
-    NODE_ENV = "production"
-    FIREBASE_PROJECT = "trs-operator-live"
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+    debug = true
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
+
+[[plugins]]
+  package = "@netlify/plugin-inline-critical-css"
+
+[[plugins]]
+  package = "@netlify/plugin-minify-html"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+  [plugins.inputs]
+    output_path = "reports/lighthouse.html"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+
+[[redirects]]
+  from = "/docs/*"
+  to = "/docs/:splat"
+  status = 200
