@@ -1,7 +1,9 @@
 {
+  "docs:build": "vuepress build src"
   "name": "permaweb-cookbook",
   "version": "2.3.0",
   "scripts": {
+    "docs:build": "vuepress build src"
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
