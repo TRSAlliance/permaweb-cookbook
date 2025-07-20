@@ -1,21 +1,15 @@
 [build]
-  base = "permaweb-cookbook"
-  command = "npm run export && npm run docs:build"
-  publish = "out"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    debug = true
-
-[[plugins]]
-  package = "@netlify/plugin-sitemap"
+  command = "yarn docs:build"
+  publish = "docs/.vuepress/dist"
 
 [[plugins]]
   package = "@netlify/plugin-inline-critical-css"
 
 [[plugins]]
   package = "@netlify/plugin-minify-html"
+
+[[plugins]]
+  package = "@netlify/plugin-sitemap"
 
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
