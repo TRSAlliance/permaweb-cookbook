@@ -1,61 +1,24 @@
-name: publish cookbook
-
+name: Deploy to Netlify
 on:
   push:
     branches:
-      - "main"
-
+      - main
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
-
-      - name: ⎔ Setup Node
-        uses: actions/setup-node@v1
+          node-version: '18'
+      - run: yarn install
+      - run: yarn docs:build
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1
         with:
-          node-version: 18.x
-
-      - name: 🔐 Verify TRS Signature
-        run: |
-          openssl dgst -verify trs.pub -signature deploy.sig .trsconfig
-          if [ $? -ne 0 ]; then exit 1; fi
-
-      - name: 📥 Download deps
-        run: |
-          cd docs
-          yarn
-
-      - name: 🛠 Build Docs
-        id: build_artifacts
-        run: |
-          cd docs
-          yarn build
-          echo "artifacts_output_dir=src/.vuepress/dist" >> $GITHUB_OUTPUT
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          SPECIAL_ACCESS_TOKEN: ${{ secrets.SPECIAL_ACCESS_TOKEN }}
-
-      - name: 💾 Publish to Arweave
-        id: publish_artifacts
-        run: |
-          cd docs
-          npx permaweb-deploy \
-            --ant-process=${ANT_PROCESS} \
-            --undername=${UNDERNAME} \
-            --deploy-folder=${{ steps.build_artifacts.outputs.artifacts_output_dir }}
-        env: 
-          DEPLOY_KEY: ${{ secrets.COOKBOOK }}
-          ANT_PROCESS: tP8uMeEQR-zodP_jHRyLJf1K7TZtACUsBrn8wdYlGuc
-          UNDERNAME: "@"
-
-      - name: 📣 Discord Notification
-        uses: Ilshidur/action-discord@master
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        with:
-          args: "✅ **Cookbook Deployed**: TRSAlliance/permaweb-cookbook pushed to Arweave."
-
+          publish-dir: 'docs/.vuepress/dist'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
